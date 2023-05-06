@@ -89,16 +89,16 @@ def plot_rat_sounds_voltrafic(df, list_cols, ratio_selected, borough='manhattan'
     fig = go.Figure()
     
     # Crear la figura
-    fig = fig.add_trace(go.Scatter(x=df["date"], y=df[ratio_selected], mode='lines', name="Proporción sonidos por volumen vehicular",line=dict(shape='spline', smoothing=0.6, color='aqua', width=3)))
+    fig = fig.add_trace(go.Scatter(x=df["date"], y=df[ratio_selected], mode='lines', name="Proporción sonidos por volumen vehicular",line=dict(shape='spline', smoothing=0.6, color='#FFF', width=2.4)))
     # Personalizar el aspecto de la gráfica
     fig.update_layout(
         title={
-            "text": f"<b>Proporción de sonidos registrados de {sound_types_dict.get(ratio_selected)} por volumen de tráfico en {borough.title()}</b>",
+            "text": f"<b>Proporción de sonidos ({sound_types_dict.get(ratio_selected)}) por volumen de tráfico en {borough.title()}</b>",
             "x": 0,
             "y": 1,
             "font": dict(
-                size=15, 
-                color='yellow'
+                size=14, 
+                color='white'
                 ),
             },
         xaxis_title="Fecha (Años)",
@@ -114,17 +114,36 @@ def plot_rat_sounds_voltrafic(df, list_cols, ratio_selected, borough='manhattan'
             title='<b>Leyenda:</b>',
             orientation='h',
             yanchor='top',
-            y=1.2,
+            y=1.22,
             xanchor='right',
-            x=1.2,
+            x=0.4,
             bgcolor='rgba(0,0,0,0)',
             font=dict(size=12),
             ))
     # Agregar línea punteada horizontal en el valor limite de proporcion igual 1
+    fig.add_trace(go.Scatter(x=[df['date'].min(), df['date'].max()], y=[10, 10],
+                            mode='lines', 
+                            name='Very Noisy', 
+                            line=dict(color='#FFA500',
+                            width=3, dash='dash')))
+    # Agregar línea punteada horizontal en el valor limite de proporcion igual 1
     fig.add_trace(go.Scatter(x=[df['date'].min(), df['date'].max()], y=[1, 1],
                             mode='lines', 
-                            name='Threshold', 
-                            line=dict(color='red',
+                            name='Moderately Noisy', 
+                            line=dict(color='#FFFF00',
+                            width=3, dash='dash')))
+    # Agregar línea punteada horizontal en el valor limite de proporcion igual 1
+    fig.add_trace(go.Scatter(x=[df['date'].min(), df['date'].max()], y=[0.1, 0.1],
+                            mode='lines', 
+                            name='Slightly Noisy', 
+                            line=dict(color='#ADD8E6',
+                            width=3, dash='dash')))
+    
+    # Agregar línea punteada horizontal en el valor limite de proporcion igual 1
+    fig.add_trace(go.Scatter(x=[df['date'].min(), df['date'].max()], y=[0.01, 0.01],
+                            mode='lines', 
+                            name='Quiet', 
+                            line=dict(color='#a2c11c',
                             width=3, dash='dash')))
     
     # Escala logarítmica en el eje Y
@@ -143,15 +162,11 @@ def plot_count_sounds_vehvol(df, borough_option):
     data = df[data_v0['borough_name'] == borough_option]
     data = data.groupby(['year']).sum().reset_index()
     
-    fig = make_subplots(rows=2, cols=1, shared_xaxes=False, vertical_spacing=0.4, 
-                        # subplot_titles=(
-                        #     f"Cantidad de registros de sonidos en {borough_option.title()}",
-                        #     f"Volumen de tráfico vehicular en {borough_option.title()}")
-                        )
+    fig = make_subplots(rows=2, cols=1, shared_xaxes=False, vertical_spacing=0.4 )
     
-    fig.add_trace(go.Scatter(x=data['year'], y=data['total_sounds'], mode='lines', name='Total Sounds', line=dict(color='aqua', width=3)), row=1, col=1)
-    fig.add_trace(go.Scatter(x=data['year'], y=data['engine_sounds'], mode='lines', name='Engine Sounds', line=dict(color='#f2cd4f', width=3)), row=1, col=1)
-    fig.add_trace(go.Scatter(x=data['year'], y=data['alert_signal_sounds'], mode='lines', name='Alert Signal Sounds', line=dict(color='#cae081', width=3)), row=1, col=1)
+    fig.add_trace(go.Scatter(x=data['year'], y=data['total_sounds'], mode='lines', name='Total Sounds', line=dict(color='#ff6f3c', width=3)), row=1, col=1)
+    fig.add_trace(go.Scatter(x=data['year'], y=data['engine_sounds'], mode='lines', name='Engine Sounds', line=dict(color='#ffc93c', width=3)), row=1, col=1)
+    fig.add_trace(go.Scatter(x=data['year'], y=data['alert_signal_sounds'], mode='lines', name='Alert Signal Sounds', line=dict(color='#ff9a3c', width=3)), row=1, col=1)
 
     # Formatear eje X
     fig.update_xaxes(title_text="Años", row=1, col=1)
@@ -181,9 +196,9 @@ def plot_count_sounds_vehvol(df, borough_option):
     fig.update_layout(
         annotations=[
             {'text': f"<b>Cantidad de registros de sonidos en {borough_option.title()}</b>", 'x': 0.5, 'y': 1.35, 'xref': 'paper', 'yref': 'paper', 'showarrow': False,
-            'font': dict(size=15, color='yellow')},
+            'font': dict(size=15, color='white')},
             {'text': f"<b>Volumen de tráfico vehicular en {borough_option.title()}</b>", 'x': 0.5, 'y': 0.40, 'xref': 'paper', 'yref': 'paper', 'showarrow': False,
-            'font': dict(size=15, color='yellow')}
+            'font': dict(size=15, color='white')}
         ]
     )
 
@@ -205,63 +220,6 @@ def plot_count_sounds_vehvol(df, borough_option):
     
     
     # Mostrar la gráfica
-    fig.add_trace(go.Scatter(x=data['year'], y=data['volume'], mode='lines', name="Volume", line=dict(color='#ef4335', width=3)), row=2, col=1)
+    fig.add_trace(go.Scatter(x=data['year'], y=data['volume'], mode='lines', name="Volume", line=dict(color='#e7eaf6', width=3)), row=2, col=1)
     
-    return fig
-
-
-@st.cache_data
-def plot_both_vehvol_sounds(df, borough_option):
-        
-    data = data_v0[data_v0['borough_name'] == borough_option]
-    data = data.groupby(['year']).sum().reset_index()
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=data['year'], y=data['total_sounds'], mode='lines', name='Total Sounds', line=dict(color='aqua', width=3)))
-    fig.add_trace(go.Scatter(x=data['year'], y=data['engine_sounds'], mode='lines', name='Engine Sounds', line=dict(color='#f2cd4f', width=3)))
-    fig.add_trace(go.Scatter(x=data['year'], y=data['alert_signal_sounds'], mode='lines', name='Alert Signal Sounds', line=dict(color='#cae081', width=3)))
-    fig.add_trace(go.Scatter(x=data['year'], y=data['volume'], mode='lines', name="Volume", line=dict(color='#ef4335', width=3)))
-
-    # Formatear eje X
-    fig.update_xaxes(
-        dtick="M12",
-        tickformat="%Y",
-        range=[data['year'].min(),
-        data['year'].max()],
-        title="Año"
-    )
-
-    # Titulo del grafico
-    fig.update_layout(
-        title={
-            'text': f"Cantidad de registros de sonidos y volumen de tráfico vehicular en {borough_option.title()}",
-            'x': 0.52,
-            'y': 1,
-            'xanchor': 'center',
-            'yanchor': 'top',
-            "font": dict(
-                    size=15, 
-                    color='yellow'
-                    ),
-        },
-        yaxis_title="Cantidad de registros de sonidos o Volumen de tráfico vehicular",
-        yaxis_type="log"
-    )
-
-    fig.update_layout(
-        plot_bgcolor="rgba(0,0,0,0)"
-    )
-    
-    # Cambiar los nombres de la leyenda
-    fig.update_layout(
-        legend=dict(
-            title='<b>Leyenda:</b>',
-            orientation='h',
-            yanchor='top',
-            y=1.2,
-            xanchor='right',
-            x=1.2,
-            bgcolor='rgba(0,0,0,0)',
-            font=dict(size=12),
-            ))
-    # Mostrar la gráfica
     return fig

@@ -129,7 +129,7 @@ table_html = f"""
     </table>
   </div>
   <div align="center" class="right-container">
-    <img src="https://github.com/francomyburg/Proyecto_grupal_DS/blob/main/4.REPORTS/source/Pm2.png?raw=true" width="300px" height="300px" />
+    <img src="https://github.com/francomyburg/Proyecto_grupal_DS/blob/main/5.DATAXI/pages/Pm2.png?raw=true" width="300px" height="300px" />
     <p style="color:#085f63; ">El sector de transporte genera el 17% de la contaminacón.</p>
   </div>
 </div>

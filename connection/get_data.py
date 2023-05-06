@@ -30,9 +30,3 @@ def get_data(query):
         if cnxn:
             cnxn.close()
     return df
-
-# Ejemplo de consulta sobre la tabla de monthly REPORT
-# df = get_data('SELECT * FROM [monthly_report]')
-
-# print(df)
-
