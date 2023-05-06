@@ -101,7 +101,7 @@ def plot_rat_sounds_voltrafic(df, list_cols, ratio_selected, borough='manhattan'
                 color='white'
                 ),
             },
-        xaxis_title="Fecha (Años)",
+        xaxis_title="Años",
         yaxis_title="Proporción (sonidos registrados / volumen vehicular)",
         plot_bgcolor='rgba(0,0,0,0)',
         height=500,
@@ -116,7 +116,7 @@ def plot_rat_sounds_voltrafic(df, list_cols, ratio_selected, borough='manhattan'
             yanchor='top',
             y=1.22,
             xanchor='right',
-            x=0.4,
+            x=1.,
             bgcolor='rgba(0,0,0,0)',
             font=dict(size=12),
             ))
