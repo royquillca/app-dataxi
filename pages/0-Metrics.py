@@ -4,9 +4,8 @@ import streamlit as st
 import datetime
 import plotly.graph_objs as go
 import plotly.express as px
-# import app.connection.get_data as get_data
 
-df = pd.read_csv('df.csv',index_col=13)
+df = pd.read_csv('data/df.csv',index_col=13)
 # Convertir el índice del dataframe en datetime
 df.index = pd.to_datetime(df.index)
 

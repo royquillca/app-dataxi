@@ -1,20 +1,16 @@
 import pandas as pd
 import streamlit as st
 import datetime as datetime
-# import plotly.graph_objs as go
 import plotly.graph_objects as go
 import plotly.express as px
 
-df = pd.read_csv('df.csv',index_col=13)
+df = pd.read_csv('data/df.csv',index_col=13)
 df.index = pd.to_datetime(df.index)
-# df = df[df['license_class']=='Yellow']
-# proy_Y = pd.read_csv('Proyecto_grupal_DS/luciano/ML/proy_Y.csv',index_col=0)
-proy_Y = pd.read_csv('proy_Y.csv',index_col=0)
+proy_Y = pd.read_csv('data/proy_Y.csv',index_col=0)
 proy_Y.index = pd.to_datetime(proy_Y.index)
 # Dashboard layout
 st.set_page_config(page_title="Dashboard", page_icon=":car:", layout="wide")
 fleet = st.sidebar.number_input('Fleet Number',1,100000,value=1000)
-# monthdate = st.sidebar.date_input("Month Date", datetime.date(2023, 1, 1))
 
 # Obtener la fecha seleccionada en el date_input
 start_date = datetime.date(2015, 1, 1)  #st.date_input('Start Date',
@@ -40,26 +36,6 @@ menu_selection = st.sidebar.radio("Select a page", menu_items)
 # Obtener la posición del índice `selected_date`
 selected_date_pos = proy_Y.index.get_loc(selected_date)
 
-# # Definir las fechas de inicio y fin
-# start_date = datetime.date(2010, 1, 1)
-# end_date = datetime.date(2024, 12, 1)
-# # Crear una lista con el primer día de cada mes
-# months = []
-# current_date = start_date
-# while current_date <= end_date:
-#     months.append(current_date)
-#     current_date = datetime.date(current_date.year + (current_date.month // 12), ((current_date.month % 12) + 1), 1)
-# # Convertir la lista en una lista de tuplas con el primer día de cada mes
-# month_tuples = [(month, month.strftime('%b %Y')) for month in months]
-
-# # Agregar un control deslizante para seleccionar el rango de fechas
-# min_date = proy_Y.index.min().to_datetime()
-# max_date = proy_Y.index.max().to_datetime()
-# start_date, end_date = st.sidebar.date_range_slider('Select Date Range', min_value=min_date, max_value=max_date, value=(min_date, max_date))
-
-# # Seleccionar los datos que están dentro del rango de fechas seleccionado
-# proy_Y_subset = proy_Y[(proy_Y.index >= start_date) & (proy_Y.index <= end_date)]
-# df_subset = df[(df['month_year1'] >= start_date) & (df['month_year1'] <= end_date)]
 
 
 # Dashboard page
@@ -76,31 +52,7 @@ if menu_selection == menu_items[0]:
     with col4:
         ev_market_share = 100* fleet / (fleet + unique_vehicles_forecast/100)
         st.metric('EV Taxi Market Share', f'{ev_market_share:.2f}%')
-#     st.header("Dashboard")
-#     st.write(f"El valor de unique_vehicles para la fecha seleccionada ({selected_date}) es {unique_vehicles_forecast}")
-#     col1, col2, col3, col4 = st.columns(4)
-#     with col1:
-#         st.metric('Market Vehicles',unique_vehicles_forecast)
-#     with col2:
-#         st.metric('Taxi Market Share', f'{market_share_percentage:.2f}%')
-#     with col3:
-#         st.metric('Fleet Vehicles', fleet)
-#     with col4:
-#         ev_market_share = 100* fleet / (fleet + unique_vehicles_forecast/100)
-#         st.metric('EV Taxi Market Share', f'{ev_market_share:.2f}%')
-        
 
-#     fig = px.line(proy_Y['unique_vehicles'], x=proy_Y.index, y='unique_vehicles')
-#     fig2 = px.line(df[df['license_class']=='Yellow'], x='month_year1', y='unique_vehicles')
-#     fig.add_traces(fig2.data)
-#     fig.update_layout(
-#     title='Yellow Taxi: Average Vehicles per Day each Month',
-#     xaxis=dict(title='Month & Year', showgrid=True),
-#     yaxis=dict(title='Vehicles Per Day'))
-
-#     selected_date_pos = proy_Y.index.get_loc(selected_date)
-
-#     st.plotly_chart(fig, use_container_width=True) 
     # Crear una figura de Plotly
     fig = go.Figure()
     if  st.checkbox('Show FHVHV',value=False):
@@ -157,16 +109,6 @@ if menu_selection == menu_items[1]:
         st.metric('Fleet Trips per day',shared_trips)
 
         
-    # fig = px.line(proy_Y['trips_per_day'], x=proy_Y.index, y='trips_per_day')
-    # # fig2 = px.line(Ptrips['trips_per_day'], x=Ptrips.index, y='trips_per_day')
-    # fig2 = px.line(df[df['license_class']=='Yellow'], x='month_year1', y='trips_per_day')
-    # fig.add_traces(fig2.data)
-    # fig.update_layout(
-    # title='Yellow Taxi: Average Trips per Day each Month',
-    # xaxis=dict(title='Month & Year', showgrid=True),
-    # yaxis=dict(title='Trips Per Day'))
-    # st.plotly_chart(fig, use_container_width=True) 
-    
     
     # Plotly combinado
     fig = go.Figure()
@@ -215,16 +157,7 @@ if menu_selection == menu_items[2]:
         shared_farebox = int(farebox_day_value * market_share)
         st.metric('Fleet Farebox per day USD',shared_farebox)
     
-    # fig = px.line(proy_Y['farebox_per_day'], x=proy_Y.index, y='farebox_per_day')
-    # # fig2 = px.line(Ptrips['trips_per_day'], x=Ptrips.index, y='trips_per_day')
-    # fig2 = px.line(df[df['license_class']=='Yellow'], x='month_year1', y='farebox_per_day')
-    # fig.add_traces(fig2.data)
-    # fig.update_layout(
-    # title='Yellow Taxi: Average Farebox per Day',
-    # xaxis=dict(title='Month & Year', showgrid=True),
-    # yaxis=dict(title='Farebox Per Day'))
-    # st.plotly_chart(fig, use_container_width=True) 
-    
+
     # Plotly combinado
     fig = go.Figure()
     st.write('FHVHV: no data')
@@ -273,15 +206,6 @@ if menu_selection == menu_items[3]:
         hours_day_fleet = int(hours_day_value * fleet)
         st.metric('Fleet Total Hours per day',hours_day_fleet)
     
-    # fig = px.line(proy_Y['avg_hours_per_day_per_vehicle'], x=proy_Y.index, y='avg_hours_per_day_per_vehicle')
-    # # fig2 = px.line(Ptrips['trips_per_day'], x=Ptrips.index, y='trips_per_day')
-    # fig2 = px.line(df[df['license_class']=='Yellow'], x='month_year1', y='avg_hours_per_day_per_vehicle')
-    # fig.add_traces(fig2.data)
-    # fig.update_layout(
-    # title='Yellow Taxi: Average Hours per Day per Vehicle',
-    # xaxis=dict(title='Month & Year', showgrid=True),
-    # yaxis=dict(title='Hours Per Day'))
-    # st.plotly_chart(fig, use_container_width=True) 
     
     # Plotly combinado
     fig = go.Figure()
@@ -328,36 +252,6 @@ if menu_selection == menu_items[4]:
     with col3:
         fleet_trips = int(trips_day_value * fleet)
         st.metric('Monthly Fleet Trips',fleet_trips)
-        
-    # fig = px.line(proy_Y['monthly_trips_per_vehicle_on_road'], x=proy_Y.index, y='monthly_trips_per_vehicle_on_road')
-    # # fig2 = px.line(Ptrips['trips_per_day'], x=Ptrips.index, y='trips_per_day')
-    # fig2 = px.line(df[df['license_class']=='Yellow'], x='month_year1', y='monthly_trips_per_vehicle_on_road')
-    # fig.add_traces(fig2.data)
-    # fig.update_layout(
-    # title='Yellow Taxi: Monthly Trips per Vehicle',
-    # xaxis=dict(title='Month & Year', showgrid=True),
-    # yaxis=dict(title='Trips per Vehicle'))
-    # st.plotly_chart(fig, use_container_width=True)
-    
-    # # Configurar el slider de fechas utilizando las tuplas
-    # date_range = st.slider("Select a date range:",
-    #                     value=(start_date, end_date),
-    #                     min_value=start_date,
-    #                     max_value=end_date,
-    #                     format="MMM YYYY",
-    #                     # step=months,
-    #                     key="date_range")
-    
-    # # Obtener las fechas seleccionadas por el usuario en el slider
-    # start_selected, end_selected = date_range
-    # start_selected = start_selected.strftime('%b %Y')
-
-    # Filtrar los datos correspondientes al rango de fechas seleccionado
-    # proy_Y = proy_Y.loc[start_selected:end_selected]
-    # df = df[(df['license_class'] == 'Yellow')] 
-    # df = yellow_filtered.loc[start_selected:end_selected] 
-    
-    
     
     # Plotly combinado
     fig = go.Figure()
@@ -391,25 +285,3 @@ if menu_selection == menu_items[4]:
                     xaxis=dict(title='Month & Year', showgrid=True),
                     yaxis=dict(title='Trips per Vehicle'))
     st.plotly_chart(fig, use_container_width=True)
-
-
-# start_date = st.date_input('Start Date',datetime.date(2010, 1, 1))
-# end_date = st.date_input('End Date',datetime.date(2023, 1, 1)) 
-
-# # # Crear una lista con el primer día de cada mes
-# # months = []
-# current_date = end_date
-# while current_date <= end_date:
-#     months.append(current_date)
-#     current_date = datetime.date(current_date.year + (current_date.month // 12), ((current_date.month % 12) + 1), 1)
-# # Convertir la lista en una lista de tuplas con el primer día de cada mes
-# month_tuples = [(month, month.strftime('%b %Y')) for month in months]
-# Configurar el slider de fechas utilizando las tuplas
-# selected_date = st.slider("Select a date range:",
-#                     value=(current_date),
-#                     min_value=start_date,
-#                     max_value=end_date,
-#                     format="MMM YYYY",
-#                     # step=months,
-#                     key="date_range")
-# st.write(date_range)
