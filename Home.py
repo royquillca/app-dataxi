@@ -75,28 +75,27 @@ if query == options[0]:
 
     
     st.markdown("""
-            
-                 <h4 align="center">Team</h4>
+                <h4 align="center">Team</h4>
                 <div class="wrapper">
+                
                 <div class="profile">
-                <a href="https://www.linkedin.com/in/franco-jonas-myburg-6095b8255/"> <img src="https://media.licdn.com/dms/image/D4D35AQGu2hOptaUNgg/profile-framedphoto-shrink_800_800/0/1683032373983?e=1684000800&v=beta&t=vSKbbBAGR2a7Nc1km58FA9SQXPc05H-268V0hVVetkw" alt="Franco" title="Connect with Franco"> DATA ENGINEER </a>
+                <a href="https://www.linkedin.com/in/franco-jonas-myburg-6095b8255/"> <img src="https://media.licdn.com/dms/image/D4D35AQGu2hOptaUNgg/profile-framedphoto-shrink_800_800/0/1683032373983?e=1684000800&v=beta&t=vSKbbBAGR2a7Nc1km58FA9SQXPc05H-268V0hVVetkw" alt="Franco" title="Connect with Franco"><br>DATA ENGINEER </a>
                 </div>
 
                 <div class="profile">
-                <a href="https://www.linkedin.com/in/ivannagvdc/"><img alt="Ivanna" title="Connect with Ivanna" src="https://media.licdn.com/dms/image/C4E03AQHWmp3AQlPYSA/profile-displayphoto-shrink_200_200/0/1631153346220?e=1687996800&v=beta&t=1vKnwoPWjJgdPQ5JlEs3nBRxqYCo84X2wawG3Lj42fc">DATA ANALYST</a>
+                <a href="https://www.linkedin.com/in/ivannagvdc/"><img alt="Ivanna" title="Connect with Ivanna" src="https://media.licdn.com/dms/image/C4E03AQHWmp3AQlPYSA/profile-displayphoto-shrink_200_200/0/1631153346220?e=1687996800&v=beta&t=1vKnwoPWjJgdPQ5JlEs3nBRxqYCo84X2wawG3Lj42fc"><br>DATA ANALYST</a>
                 </div>
 
                 <div class="profile">
-                <a href="https://www.linkedin.com/in/jospinoponce/"><img alt="Jaime" title="Connect with Jaime" src="https://media.licdn.com/dms/image/D4E03AQFeOdXV4jJstA/profile-displayphoto-shrink_800_800/0/1682836288349?e=1688601600&v=beta&t=QCV7qJWXvFIkqHTEHuz7CHhVY-lSvfElf-eHIBzU-eE">DATA ENGINEER</a>
+                <a href="https://www.linkedin.com/in/jospinoponce/"><img alt="Jaime" title="Connect with Jaime" src="https://media.licdn.com/dms/image/D4E03AQFeOdXV4jJstA/profile-displayphoto-shrink_800_800/0/1682836288349?e=1688601600&v=beta&t=QCV7qJWXvFIkqHTEHuz7CHhVY-lSvfElf-eHIBzU-eE"><br>DATA ENGINEER</a>
                 </div>
 
                 <div class="profile">
-                <a href="https://www.linkedin.com/in/takticflow/"><img alt="Luciano" title="Connect with Luciano" src="https://media.licdn.com/dms/image/D4D03AQFWWFxX4oYttw/profile-displayphoto-shrink_200_200/0/1674740829816?e=1687996800&v=beta&t=J1iCwMtATTUJmi-uo0g7aqijSuvQtjrBhcj8JAk1vY8">
-                PROJECT MANAGER & DATA SCIENTIST</a>
+                <a href="https://www.linkedin.com/in/takticflow/"><img alt="Luciano" title="Connect with Luciano" src="https://media.licdn.com/dms/image/D4D03AQFWWFxX4oYttw/profile-displayphoto-shrink_200_200/0/1674740829816?e=1687996800&v=beta&t=J1iCwMtATTUJmi-uo0g7aqijSuvQtjrBhcj8JAk1vY8"><br>PROJECT MANAGER & DATA SCIENTIST</a>
                 </div>
 
                 <div class="profile">
-                <a href="https://www.linkedin.com/in/royquillca/"><img alt="Roy" title="Connect with Roy" src="https://media.licdn.com/dms/image/D4E35AQHQg3nYCccKSA/profile-framedphoto-shrink_800_800/0/1682912414782?e=1683644400&v=beta&t=V2tI9NsN_ExYqXSHIfqvht2mnOdOPyN8DcP1iHP4FxM" class="profile-description">DATA ENGINEER</a>
+                <a href="https://www.linkedin.com/in/royquillca/"><img alt="Roy" title="Connect with Roy" src="https://media.licdn.com/dms/image/D4E35AQHQg3nYCccKSA/profile-framedphoto-shrink_800_800/0/1682912414782?e=1683644400&v=beta&t=V2tI9NsN_ExYqXSHIfqvht2mnOdOPyN8DcP1iHP4FxM" class="profile-description"><br>DATA ENGINEER</a>
 
                 </div>
                 </div>
