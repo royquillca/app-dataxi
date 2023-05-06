@@ -4,7 +4,9 @@ import streamlit as st
 import datetime
 import plotly.graph_objs as go
 import plotly.express as px
+# import app.connection.get_data as get_data
 
+# df = pd.read_csv('Proyecto_grupal_DS/luciano/df.csv',index_col=13)
 df = pd.read_csv('data/df.csv',index_col=13)
 # Convertir el índice del dataframe en datetime
 df.index = pd.to_datetime(df.index)
@@ -12,7 +14,7 @@ df.index = pd.to_datetime(df.index)
 # Dashboard layout
 st.set_page_config(page_title="Dashboard", page_icon=":car:", layout="wide")
 fleet = st.sidebar.number_input('Fleet Number',1,100000,value=1000)
-
+# Obtener la fecha seleccionada en el date_input
 start_date = datetime.date(2015, 1, 1)  #st.date_input('Start Date',
 end_date = datetime.date(2023, 1, 1)    # st.date_input('End Date',
 current_date = datetime.date(2023, 1, 1)
@@ -33,7 +35,6 @@ selected_date_pos = df.index.get_loc(selected_date)
 unique_vehicles_value = df[df['license_class']=='Yellow'].loc[selected_date, 'unique_vehicles']
 market_share = fleet / (fleet + unique_vehicles_value)
 market_share_percentage = market_share * 100
-# Sidebar menu
 menu_items = ["Vehicles", "Trips", "Farebox", "Ratios"]
 menu_selection = st.sidebar.radio("Select a page", menu_items)
 colors = {'Yellow': 'Yellow', 'Green': 'Green', 'FHV - High Volume': 'FHVHV','FHV - Black Car':'Black','FHV - Lux Limo':'Lux Limo','FHV - Livery':'Livery'}
@@ -54,9 +55,9 @@ if menu_selection == menu_items[0]:
         st.metric('EV Taxi Market Share', f'{ev_market_share:.2f}%')
     
     fig = go.Figure()
-
     if  st.checkbox('Show Vehicles FHVHV',value=False):
         fig.add_trace(go.Scatter(x=df[df['license_class']=='FHV - High Volume']['month_year1'], y=df[df['license_class']=='FHV - High Volume']['unique_vehicles'], mode='lines', name='FHV - High Volume'))
+    # fig.add_trace(go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['unique_vehicles'], mode='lines', name='Yellow'))
     yellow_trace = go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['unique_vehicles'], mode='lines', name='Yellow')
     fig.add_trace(yellow_trace)
     max_y = max(yellow_trace.y)
@@ -73,7 +74,7 @@ if menu_selection == menu_items[0]:
                 x0=selected_date, 
                 y0=0,
                 x1=selected_date, 
-                y1=15000,   
+                y1=15000,   #max(yellow_trace.y)
                 line=dict(color='red', dash='dash'))
     
     selection_date = selected_date.strftime('%y-%m')
@@ -91,6 +92,7 @@ if menu_selection == menu_items[0]:
     yaxis=dict(title='Unique Vehicles'))
     st.plotly_chart(fig, use_container_width=True)
     
+    # df = df[df['license_class']=='Yellow']
     unique_drivers_value = df[df['license_class']=='Yellow'].loc[selected_date, 'unique_drivers']
     st.metric('Market Drivers',unique_drivers_value)
     fig = go.Figure()
@@ -99,7 +101,7 @@ if menu_selection == menu_items[0]:
     yellow_trace=go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['unique_drivers'], mode='lines', name='Yellow')
     fig.add_trace(yellow_trace)
     max_y = max(yellow_trace.y)
-    idx_max_y = df[df['license_class']=='Yellow']['unique_drivers'].idxmax()  
+    idx_max_y = df[df['license_class']=='Yellow']['unique_drivers'].idxmax()   #df[df['license_class']=='Yellow']['unique_vehicles']
 
 
     fig.add_shape(type="line",
@@ -134,11 +136,13 @@ if menu_selection == menu_items[0]:
     fig = go.Figure()
     if  st.checkbox('Show Drivers/Vehicles FHVHV',value=False):
         fig.add_trace(go.Scatter(x=df[df['license_class']=='FHV - High Volume']['month_year1'], y=df[df['license_class']=='FHV - High Volume']['drivers_vehicles_ratio'], mode='lines', name='FHV - High Volume'))
+    # fig.add_trace(go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['drivers_vehicles_ratio'], mode='lines', name='Yellow'))
     yellow_trace=go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['drivers_vehicles_ratio'], mode='lines', name='Yellow')
     fig.add_trace(yellow_trace)
     max_y = max(yellow_trace.y)
     idx_max_y = df[df['license_class']=='Yellow']['drivers_vehicles_ratio'].idxmax()   
 
+    
     fig.add_shape(type="line",
             x0=datetime.date(2010, 1, 1), 
             y0=df[df['license_class']=='Yellow'].loc[selected_date, 'drivers_vehicles_ratio'],
@@ -179,12 +183,9 @@ if menu_selection == menu_items[1]:
         shared_trips = int(trips_day_value * market_share)
         st.metric('Fleet Trips per day',shared_trips)
 
-
-    # # Create a new column with the corresponding color for each license class
-
+    fig = go.Figure()
     if  st.checkbox('Show Trips/Day FHVHV',value=False):
         fig.add_trace(go.Scatter(x=df[df['license_class']=='FHV - High Volume']['month_year1'], y=df[df['license_class']=='FHV - High Volume']['trips_per_day'], mode='lines', name='FHV - High Volume'))
-
     yellow_trace = go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['trips_per_day'], mode='lines', name='Yellow')
     fig.add_trace(yellow_trace)
     max_y = max(yellow_trace.y)
@@ -216,8 +217,7 @@ if menu_selection == menu_items[1]:
     xaxis=dict(title='Month & Year', showgrid=True),
     yaxis=dict(title='Trips Per Day'))
 
-    st.plotly_chart(fig, use_container_width=True)  #
-
+    st.plotly_chart(fig, use_container_width=True) 
 
 if menu_selection == menu_items[2]:
     
@@ -237,7 +237,6 @@ if menu_selection == menu_items[2]:
     fig.add_trace(yellow_trace)
     max_y = max(yellow_trace.y)
     idx_max_y = df[df['license_class']=='Yellow']['farebox_per_day'].idxmax()   
-
 
     fig.add_shape(type="line",
             x0=datetime.date(2010, 1, 1), 
@@ -282,6 +281,7 @@ if menu_selection == menu_items[3]:
         trips_vehicle_value = df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_trips_per_vehicle_on_road']
         st.metric('Trips per vehicle',int(trips_vehicle_value))
     fig = go.Figure()
+    # fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='monthly_farebox_per_vehicle_on_road', color='color')
     yellow_trace = go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['monthly_farebox_per_vehicle_on_road'], mode='lines', name='Yellow')
     fig.add_trace(yellow_trace)
     max_y = max(yellow_trace.y)
@@ -373,5 +373,4 @@ if menu_selection == menu_items[3]:
     xaxis=dict(title='Month & Year', showgrid=False),
     yaxis=dict(title='Monthly Trips Per Vehicle On Road'))
     st.plotly_chart(fig, use_container_width=True)
-# start_date = st.sidebar.date_input('Start Date',datetime.date(2013, 1, 1))
-# end_date = st.sidebar.date_input('End Date',datetime.date(2023, 1, 1))
+ 
